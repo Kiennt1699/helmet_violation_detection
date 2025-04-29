@@ -318,7 +318,7 @@ const CitizenInfoForm = () => {
   return (
     <Box sx={{ p: { xs: 2, md: 4 }, maxWidth: 1000, mx: "auto" }}>
       <Typography variant="h4" fontWeight={700} mb={3}>
-        Thông tin công dân
+        Citizen information
       </Typography>
 
       <Paper sx={{ p: 3 }}>
