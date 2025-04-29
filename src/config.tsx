@@ -6,7 +6,7 @@ const ENV = {
   },
   production: {
     BASE_URL: "https://yourfrontend.com",
-    API_URL: "https://hanaxuan-backend.hf.space/api", // server
+    API_URL: "https://hanaxuan-backend.hf.space/api/", // server
   },
 };
 
