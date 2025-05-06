@@ -7,64 +7,22 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Dependency directories
-node_modules/
+# Dependencies
+node_modules
+package.json
+package-lock.json
 
-# Build outputs
-dist/
-dist-ssr/
-build/
-.out/
+dist
+dist-ssr
+*.local
 
-# Vite cache
-.vite/
-
-# Local environment files
-.env
-.env.*.local
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# System files
-.DS_Store
-Thumbs.db
-
-# IDEs and editors
+# Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea/
+.idea
+.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-
-# TypeScript cache
-*.tsbuildinfo
-
-# Optional npm cache directory
-.npm/
-
-# Optional yarn cache directory
-.yarn/
-
-# Optional pnpm store directory
-.pnpm-store/
-
-# Storybook build (if you use Storybook)
-storybook-static/
-
-# Testing
-coverage/
-.nyc_output/
-
-# Lint cache
-.eslintcache
-
-# Mac system file
-Icon?
-
-# VS Code settings history
-.history/

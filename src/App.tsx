@@ -8,7 +8,6 @@ import ViolationDetected from "./pages//Violation/ViolationDetected";
 import DataDetection from "./pages/data/DataDetection";
 import DataDetail from "./pages/data/DataDetail_fetch";
 import UserManagement from "./pages/Account/UserManagement";
-import ViolationByLocation from "./pages/Analytics/ViolationByLocation";
 import PrivateRoute from "./stores/privateroute";
 import CitizenManagement from "./pages/Supervisor/CitizenManagement/CitizenManagement";
 import Modify from "./pages/Modify/page";
@@ -26,13 +25,7 @@ import Notification from "./pages/Citizens/Notifications/Notification";
 import CitizenRoute from "./stores/citizenroute";
 import SupervisorProfile from "./pages/Supervisor/Profile/SupervisorProfile";
 import NotificationManager from "./pages/Modify/Notify/NotificationManager";
-import CitizenVerification from "./pages/Supervisor/CitizenManagement/CitizenVerification";
-// import StreamingImage from "./pages/Streaming/StreamingImage";
-// import Violation from "./pages/Violation/ViolationModify";
-// import HardCodeStatus from "./pages/Modify/Status/harcode";
-// import CitizenInfoFormHardCode from "./pages/Citizens/Informations/CitizenInfo-hard-code";
-// import CarApplicationsHardCode from "./pages/Citizens/Aplications/CitizenApplication-hard-code";
-// import ViolationLookupPageHardCode from "./pages/Citizens/View/ViolationSearchHardCode";
+import Unauthorized from "./stores/Unauthorized";
 
 
 
@@ -55,23 +48,23 @@ const App = () => {
 
         {/* Routes cho Supervisor */}
         <Route path="/devices" element={<PrivateRoute element={<MainLayout><DeviceList /></MainLayout>} requiredRole="Supervisor"/>} />
+        {/* <Route path="/violation" element={<PrivateRoute element={<MainLayout><Violation /></MainLayout>} requiredRole="Supervisor"/>} /> */}
         <Route path="/violation-detection" element={<PrivateRoute element={<MainLayout><ViolationDetected /></MainLayout>} requiredRole="Supervisor"/>} />
         {/* <Route path="/violation" element={<PrivateRoute element={<MainLayout><Violation /></MainLayout>} />} /> */}
         <Route path="/citizen-management" element={<PrivateRoute element={<MainLayout><CitizenManagement /></MainLayout>} requiredRole="Supervisor"/>} />
-        <Route path="/citizen-verification" element={<PrivateRoute element={<MainLayout><CitizenVerification /></MainLayout>} requiredRole="Supervisor"/>} />
+        {/* <Route path="/citizen-verification" element={<PrivateRoute element={<MainLayout><CitizenVerification /></MainLayout>} requiredRole="Supervisor"/>} /> */}
         <Route path="/data-detection" element={<PrivateRoute element={<MainLayout><DataDetection /></MainLayout>} requiredRole="Supervisor"/>} />
         <Route path="/device/:deviceId" element={<PrivateRoute element={<MainLayout><DataDetail /></MainLayout>} requiredRole="Supervisor"/>} />
-        <Route path="/analytics" element={<PrivateRoute element={<MainLayout><ViolationByLocation /></MainLayout>} requiredRole="Supervisor"/>} />
         <Route path="/modify" element={<PrivateRoute element={<MainLayout><Modify /></MainLayout>} requiredRole="Supervisor"/>} />
         <Route path="/manage-status" element={<PrivateRoute element={<MainLayout><StatusManagement /></MainLayout>} requiredRole="Supervisor"/>} />
         {/* <Route path="/status-hard-code" element={<MainLayout><HardCodeStatus /></MainLayout>} /> */}
         <Route path="/manage-location" element={<PrivateRoute element={<MainLayout><LocationCreator /></MainLayout>} requiredRole="Supervisor"/>} />
         <Route path="/reports" element={<PrivateRoute element={<MainLayout><ReportPage /></MainLayout>} requiredRole="Supervisor"/>} />
-        <Route path="/profile" element={<PrivateRoute element={<MainLayout><SupervisorProfile /></MainLayout>} requiredRole="Supervisor"/>} />
+        <Route path="/profile" element={<PrivateRoute element={<MainLayout><SupervisorProfile /></MainLayout>} requiredRole={["Supervisor", "Admin"]} />} />
         <Route path="/manage-notifications" element={<PrivateRoute element={<MainLayout><NotificationManager /></MainLayout>} requiredRole="Supervisor"/>} />
 
 
-        <Route path="/citizen" element={<CitizenRoute element={<MainLayout><CitizenManager /></MainLayout>}/>} />
+        <Route path="/citizen" element={<CitizenRoute element={<MainLayout><CitizenManager /></MainLayout>} />} />
         <Route path="/citizen-info" element={<CitizenRoute  element={<MainLayout><CitizenInfoForm /></MainLayout>}/>} />
         {/* <Route path="/citizen-info-hard-code" element={<MainLayout><CitizenInfoFormHardCode /></MainLayout>} /> */}
         <Route path="/citizen-applications" element={<CitizenRoute  element={<MainLayout><CitizenApplication /></MainLayout>}/>} />
@@ -82,6 +75,7 @@ const App = () => {
         <Route path="/notificattions" element={<MainLayout><Notification /></MainLayout>} />
 
         <Route path="*" element={<NotFound />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
       </Routes>
     </Router>
   );
