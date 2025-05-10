@@ -169,6 +169,16 @@ const Dashboard: React.FC = () => {
     return `data:image/${format};base64,${data}`;
   };
 
+  const groupCountsByDate = (data: { time: string; count: number }[]) => {
+    const grouped: { [date: string]: number } = {};
+    data.forEach(item => {
+      const date = item.time.slice(0, 10); // "YYYY-MM-DD"
+      grouped[date] = (grouped[date] || 0) + item.count;
+    });
+    // Convert to array of { date, count }
+    return Object.entries(grouped).map(([date, count]) => ({ date, time: date, count }));
+  };
+
   useEffect(() => {
     fetchAllData();
   }, []);
@@ -217,7 +227,7 @@ const Dashboard: React.FC = () => {
       });
       setLocationCounts(mappedLocationCounts);
       
-      setTimeCounts(timeCountsRes.data || []);
+      setTimeCounts(groupCountsByDate(timeCountsRes.data || []));
       
       // Sort notifications by created_at (newest first)
       const sortedNotifications = (notificationsRes.data?.data || []).sort(
@@ -240,14 +250,8 @@ const Dashboard: React.FC = () => {
         `${API_BASE_URL}violations/count-by-time/?timeframe=${timeframe}`
       );
       
-      // Transform the API response to match the expected TimeCount format
-      const timeData = (response.data || []).map((item: any) => ({
-        date: new Date(item.time).toLocaleDateString(), // Convert time to date string
-        time: item.time,
-        count: item.count
-      }));
-      
-      setTimeCounts(timeData);
+      const groupedData = groupCountsByDate(response.data || []);
+      setTimeCounts(groupedData);
     } catch (err) {
       console.error("Failed to fetch time data:", err);
     }
