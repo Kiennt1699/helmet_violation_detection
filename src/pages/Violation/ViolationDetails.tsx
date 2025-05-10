@@ -17,14 +17,13 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  useTheme,
   Zoom,
 } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import axiosInstance from "../../services/axiosInstance.tsx";
-import config from "../../config";
+import config from "../../config.tsx";
 
 const API_BASE_URL = config.API_URL;
 
@@ -65,7 +64,6 @@ const ViolationDetail: React.FC<ViolationDetailProps> = ({ violation, onStatusUp
     severity: "success" as "success" | "error"
   });
   
-  useTheme();
   const userRole = localStorage.getItem("user_role") || "user";
   const isSupervisor = userRole.toLowerCase() === "supervisor";
 
