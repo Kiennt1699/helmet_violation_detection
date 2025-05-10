@@ -1,8 +1,8 @@
 
 const ENV = {
   development: {
-    BASE_URL: "http://localhost:3000",
-    API_URL: "http://58.8.184.170:54688/api/", // local testing
+    BASE_URL: "http://localhost:7068",
+    API_URL: "http://171.226.158.102:27406/api/", // server
   },
   production: {
     BASE_URL: "https://yourfrontend.com",
