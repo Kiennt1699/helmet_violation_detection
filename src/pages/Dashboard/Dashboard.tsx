@@ -233,7 +233,7 @@ const Dashboard: React.FC = () => {
         );
         return {
           ...item,
-          location_name: location?.name || `Location ${item.location}`,
+          location_name: location?.name || `Location ${item.location_name}`,
         };
       });
       setLocationCounts(mappedLocationCounts);
@@ -497,7 +497,7 @@ const Dashboard: React.FC = () => {
 
   const locationChartData = useMemo(() => {
     return {
-      labels: locationCounts.map(item => item.location_name),
+      labels: locationCounts.map(item => item.location_id ?? 'Unknown'),
       datasets: [
         {
           label: "Violations",
@@ -516,17 +516,23 @@ const Dashboard: React.FC = () => {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: {
-        display: false,
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: (context: any[]) => {
+            const locationId = context[0].label;
+            const found = locationCounts.find(item => String(item.location_id ?? 'Unknown') === String(locationId));
+            return found?.location_name || 'Unknown Location';
+          },
+          label: (context: any) => `Violations: ${context.raw}`,
+        }
       },
       datalabels: {
         color: 'white',
-        anchor: 'center' as const,
+        anchor: 'center',
         align: 'center' as const,
         formatter: (value: number) => (value > 0 ? value : ''),
-        font: {
-          weight: 'bold' as const
-        }
+        font: { weight: 'bold' }
       },
     },
     scales: {
@@ -534,15 +540,18 @@ const Dashboard: React.FC = () => {
         beginAtZero: true,
         grid: {
           drawBorder: false,
-          color: theme.palette.mode === 'dark' 
-            ? 'rgba(255, 255, 255, 0.1)' 
+          color: theme.palette.mode === 'dark'
+            ? 'rgba(255, 255, 255, 0.1)'
             : 'rgba(0, 0, 0, 0.1)',
         },
       },
       x: {
-        grid: {
-          display: false,
-        },
+        grid: { display: false },
+        ticks: {
+          callback: function(this: any, _value: any, index: number) {
+            return locationCounts[index]?.location_id ?? 'Unknown';
+          }
+        }
       },
     },
   };
@@ -863,7 +872,7 @@ const Dashboard: React.FC = () => {
               <Box sx={{ height: barLineChartHeight }}>
                 <Bar
                   data={locationChartData}
-                  options={locationChartOptions}
+                  options={locationChartOptions as any}
                 />
               </Box>
             </CardContent>
