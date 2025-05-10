@@ -57,6 +57,22 @@ const CameraCapture = ({ onImageCapture, disabled = false }: CameraCaptureProps)
         stopCamera();
       }
 
+      // Check if the page is served over HTTPS
+      if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+        throw new Error(
+          "Camera access requires a secure connection (HTTPS). " +
+          "Please ensure you're accessing the page through HTTPS."
+        );
+      }
+
+      // Check if mediaDevices is supported
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error(
+          "Camera access is not supported in this browser or environment. " +
+          "Please ensure you're using a modern browser and the page is served over HTTPS."
+        );
+      }
+
       const constraints = {
         video: {
           facingMode: facingMode,

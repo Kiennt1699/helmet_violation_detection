@@ -197,7 +197,7 @@ const OCRLicenseForm = () => {
       const response = await axios.post(`${API_BASE_URL}citizens/register-car-parrot/${citizenId}/`, payload);
 
       const getResponse = await axios.get(`${API_BASE_URL}citizens/get-applications/${citizenId}/`);
-       getResponse.data?.applications || [];
+      const _applications = getResponse.data?.applications || [];
       const carParrotId = response.data?.id || null;
 
       setUploadedVehicles((prev) => [

@@ -17,6 +17,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  useTheme,
   Zoom,
 } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
@@ -64,6 +65,7 @@ const ViolationDetail: React.FC<ViolationDetailProps> = ({ violation, onStatusUp
     severity: "success" as "success" | "error"
   });
   
+  const _theme = useTheme();
   const userRole = localStorage.getItem("user_role") || "user";
   const isSupervisor = userRole.toLowerCase() === "supervisor";
 

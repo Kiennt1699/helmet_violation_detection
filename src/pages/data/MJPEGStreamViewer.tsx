@@ -583,7 +583,7 @@ const MJPEGStreamViewer: React.FC<MJPEGStreamViewerProps> = ({
           </Box>
         </Box>
 
-        <Box sx={{ p: 2, backgroundColor: "#fff" }}>
+        {/* <Box sx={{ p: 2, backgroundColor: "#fff" }}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
@@ -619,7 +619,7 @@ const MJPEGStreamViewer: React.FC<MJPEGStreamViewerProps> = ({
               </Box>
             </Grid>
           </Grid>
-        </Box>
+        </Box> */}
       </Paper>
     </Box>
   );
