@@ -125,6 +125,17 @@ interface Notification {
   message?: string;
 }
 
+// Utility function to group counts by date
+const groupCountsByDate = (data: { time: string; count: number }[]) => {
+  const grouped: { [date: string]: number } = {};
+  data.forEach(item => {
+    const date = item.time.slice(0, 10); // "YYYY-MM-DD"
+    grouped[date] = (grouped[date] || 0) + item.count;
+  });
+  // Convert to array of { date, time, count }
+  return Object.entries(grouped).map(([date, count]) => ({ date, time: date, count }));
+};
+
 const Dashboard: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -195,7 +206,7 @@ const Dashboard: React.FC = () => {
         axiosInstance.get(`${API_BASE_URL}citizens/count-by-status/`),
         axiosInstance.get(`${API_BASE_URL}locations/get-all/`),
         axiosInstance.get(`${API_BASE_URL}violations/count-by-location/`),
-        axiosInstance.get(`${API_BASE_URL}violations/count-by-time/?timeframe=${timeFilter}`),
+        axiosInstance.get(`${API_BASE_URL}violations/count-by-time/?timeframe=${timeFilter}`), // TODO: 
         axiosInstance.get(`${API_BASE_URL}notifications/view_all/`),
       ]);
 
@@ -217,7 +228,8 @@ const Dashboard: React.FC = () => {
       });
       setLocationCounts(mappedLocationCounts);
       
-      setTimeCounts(timeCountsRes.data || []);
+      // TODO: 
+      setTimeCounts(groupCountsByDate(timeCountsRes.data || []));
       
       // Sort notifications by created_at (newest first)
       const sortedNotifications = (notificationsRes.data?.data || []).sort(
@@ -240,14 +252,9 @@ const Dashboard: React.FC = () => {
         `${API_BASE_URL}violations/count-by-time/?timeframe=${timeframe}`
       );
       
-      // Transform the API response to match the expected TimeCount format
-      const timeData = (response.data || []).map((item: any) => ({
-        date: new Date(item.time).toLocaleDateString(), // Convert time to date string
-        time: item.time,
-        count: item.count
-      }));
-      
-      setTimeCounts(timeData);
+      // Group by date and sum counts
+      const groupedData = groupCountsByDate(response.data || []);
+      setTimeCounts(groupedData);
     } catch (err) {
       console.error("Failed to fetch time data:", err);
     }
@@ -529,7 +536,7 @@ const Dashboard: React.FC = () => {
       },
     },
   };
-
+// TODO: 
   const timeChartData = useMemo(() => ({
     labels: timeCounts.map(item => item.date || new Date(item.time).toLocaleDateString()),
     datasets: [
@@ -852,8 +859,8 @@ const Dashboard: React.FC = () => {
             </CardContent>
           </Card>
         </Grid>
-
-        <Grid item xs={12} md={6}>
+            {/* TODO */}
+        <Grid item xs={12} md={6}>  
           <Card elevation={3}>
             <CardHeader
               title="Violations Over Time"
